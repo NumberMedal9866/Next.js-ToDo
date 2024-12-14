@@ -30,6 +30,7 @@ const Modal = ({ onTaskAdded }) => {
         setInputValue(""); // Clear input
         modalRef.current.close(); // Close the modal
       } else {
+        setInputValue("");
         alert("Failed to save task");
       }
     } catch (error) {

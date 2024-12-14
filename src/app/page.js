@@ -10,7 +10,7 @@ export default function Home() {
   // Fetch tasks from the backend
   const fetchTasks = async () => {
     try {
-      const response = await fetch("/api/getData");
+      const response = await fetch("/data.json");
       if (response.ok) {
         const data = await response.json();
         setTasks(data);
@@ -21,6 +21,7 @@ export default function Home() {
       console.error("Error fetching tasks:", error);
     }
   };
+  
 
   // Add a new task (called by Modal)
   const addTask = (newTask) => {
