@@ -9,12 +9,12 @@ const Modal = ({ onTaskAdded }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!inputValue.trim()) {
       alert("Task cannot be empty");
       return;
     }
-
+  
     try {
       const response = await fetch("/api/saveData", {
         method: "POST",
@@ -23,14 +23,17 @@ const Modal = ({ onTaskAdded }) => {
         },
         body: JSON.stringify({ data: inputValue }),
       });
-
+  
+      const responseText = await response.text(); // Log response for debugging
+      console.log("Response status:", response.status);
+      console.log("Response body:", responseText);
+  
       if (response.ok) {
-        const newTask = await response.json();
-        onTaskAdded(newTask.newTask); // Notify the parent component of the new task
-        setInputValue(""); // Clear input
-        modalRef.current.close(); // Close the modal
-      } else {
+        const newTask = JSON.parse(responseText);
+        onTaskAdded(newTask.newTask);
         setInputValue("");
+        modalRef.current.close();
+      } else {
         alert("Failed to save task");
       }
     } catch (error) {
@@ -38,10 +41,17 @@ const Modal = ({ onTaskAdded }) => {
       alert("An error occurred");
     }
   };
+  
 
   const openModal = () => {
+    console.log("Opening modal...");
+    console.log("Current selection:", window.getSelection()?.toString());
     modalRef.current.showModal();
+    const input = modalRef.current.querySelector("input");
+    if (input) input.focus();
   };
+  
+  
 
   const closeModal = (e) => {
     if (e.target === modalRef.current) {
