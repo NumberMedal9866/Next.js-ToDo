@@ -10,12 +10,12 @@ export default function Home() {
   // Fetch tasks from the backend
   const fetchTasks = async () => {
     try {
-      const response = await fetch("/data.json");
+      const response = await fetch("/api/getData");
       if (response.ok) {
         const data = await response.json();
         setTasks(data);
       } else {
-        console.error("Failed to fetch tasks");
+        console.error("Failed to fetch tasks:", response.status);
       }
     } catch (error) {
       console.error("Error fetching tasks:", error);
@@ -27,6 +27,10 @@ export default function Home() {
   const addTask = (newTask) => {
     setTasks((prevTasks) => [...prevTasks, newTask]);
   };
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
   // Delete a task
   const deleteTask = (taskId) => {
@@ -41,10 +45,6 @@ export default function Home() {
       )
     );
   };
-
-  useEffect(() => {
-    fetchTasks();
-  }, []);
 
   return (
     <main className="max-w-4xl mx-auto mt-4">
