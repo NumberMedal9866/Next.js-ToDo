@@ -10,7 +10,8 @@ export default function handler(req, res) {
     }
 
     // Define the path to the data.json file
-    const filePath = path.join(process.cwd(), "data.json");
+    const filePath = path.join(process.cwd(), "public", "data.json");
+
 
     try {
       // Read the existing JSON data

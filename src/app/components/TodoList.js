@@ -37,8 +37,7 @@ const TodoList = ({ data, onDeleteTask, onEditTask }) => {
         </thead>
         {/* Table Body */}
         <tbody>
-          {data && data.length > 0 ? (
-            data.map((task) => (
+          {data && data.length > 0 ? (data.map((task) => (
               <tr key={task.id}>
                 <td className="w-full">
                   {editingTaskId === task.id ? (
